@@ -17,6 +17,9 @@ int main(void)
     camera.projection = CAMERA_PERSPECTIVE;
     
     Vector3 spherePosition = {0.0f, 0.0f, 0.0f};
+    bool goRight = true;
+    float speed = 1.0f;
+    float distance = 4.0f;
     
     InitWindow(screenWidth, screenHeight, "Left right sphere");
     
@@ -29,8 +32,25 @@ int main(void)
         BeginMode3D(camera);
         
         DrawSphere(spherePosition, 1, RED);
-        
         DrawGrid(10, 1.0f);
+        
+        if(goRight)
+        {
+            spherePosition.x += speed * GetFrameTime();
+        }
+        else
+        {
+            spherePosition.x -= speed * GetFrameTime();
+        }
+        
+        if(spherePosition.x >= distance)
+        {
+            goRight = false;
+        }
+        if(spherePosition.x <= -distance)
+        {
+            goRight = true;
+        }
         
         EndMode3D();
         EndDrawing();
