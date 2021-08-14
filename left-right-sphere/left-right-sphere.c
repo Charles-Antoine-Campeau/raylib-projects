@@ -6,9 +6,11 @@
 
 int main(void)
 {
+    //screen size
     const int screenWidth = 1200;
     const int screenHeight = 800;
     
+    //Set the 3d camera
     Camera camera = {0};
     camera.position = (Vector3){10.0f, 10.0f, 10.0f};
     camera.target = (Vector3){0.0f, 0.0f, 0.0f};
@@ -16,6 +18,7 @@ int main(void)
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
     
+    //set the variables for the sphere
     Vector3 spherePosition = {0.0f, 0.0f, 0.0f};
     bool goRight = true;
     float speed = 1.0f;
@@ -34,6 +37,7 @@ int main(void)
         DrawSphere(spherePosition, 1, RED);
         DrawGrid(10, 1.0f);
         
+        //determine if the sphere needs to move left or right
         if(goRight)
         {
             spherePosition.x += speed * GetFrameTime();
@@ -43,6 +47,7 @@ int main(void)
             spherePosition.x -= speed * GetFrameTime();
         }
         
+        //determine if the sphere has reach one of the end
         if(spherePosition.x >= distance)
         {
             goRight = false;
