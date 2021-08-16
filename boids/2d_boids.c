@@ -14,6 +14,26 @@ int main(void)
     
     InitPhysics();
     
+    // Create floor rectangle physics body
+    PhysicsBody floor = CreatePhysicsBodyRectangle((Vector2){ screenWidth/2, screenHeight }, screenWidth, 10, 10);
+    floor->enabled = false; // Disable body state to convert it to static (no dynamics, but collisions)
+    floor->restitution = 1;
+    
+    //Create left rectangle physics body
+    PhysicsBody leftWall = CreatePhysicsBodyRectangle((Vector2){0, screenHeight/2 }, 10, screenHeight, 10);
+    leftWall->enabled = false;
+    leftWall->restitution = 1;
+    
+    //Create right rectangle physics body
+    PhysicsBody rightWall = CreatePhysicsBodyRectangle((Vector2){screenWidth, screenHeight/2}, 10, screenHeight, 10);
+    rightWall->enabled = false;
+    rightWall->restitution = 1;
+    
+    //Create roof rectangle physics body
+    PhysicsBody roof = CreatePhysicsBodyRectangle((Vector2){screenWidth/2, 0}, screenWidth, 10, 10);
+    roof->enabled = false;
+    roof->restitution = 1;
+    
     while(!WindowShouldClose())
     {
         //UPDATE************************************************************************
@@ -23,16 +43,22 @@ int main(void)
         {
             PhysicsBody tmpSphere = CreatePhysicsBodyCircle(GetMousePosition(), GetRandomValue(10, 45), 10);
             tmpSphere->useGravity = false;
-            tmpSphere->velocity = (Vector2){1, 1};
+            tmpSphere->velocity = (Vector2){GetRandomValue(-1, 1), GetRandomValue(-1, 1)};
+            tmpSphere->restitution = 5;
         }
         
         int bodiesCount = GetPhysicsBodiesCount();
         
-        // Destroy falling physics bodies
+        // Destroy out of bounds physics bodies
         for (int i = bodiesCount - 1; i >= 0; i--)
         {
             PhysicsBody body = GetPhysicsBody(i);
-            if (body != NULL && (body->position.y > screenHeight*2)) DestroyPhysicsBody(body);
+            int positionY = body->position.y;
+            int positionX = body->position.x;
+            if (body != NULL && ( (positionY > screenHeight*2) || (positionY < -screenHeight) || (positionX > screenWidth * 2) || (positionX < -screenWidth) ) )
+            {
+                DestroyPhysicsBody(body);
+            }
         }
 
         
