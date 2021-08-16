@@ -21,7 +21,9 @@ int main(void)
         
         if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
         {
-            CreatePhysicsBodyCircle(GetMousePosition(), GetRandomValue(10, 45), 10);
+            PhysicsBody tmpSphere = CreatePhysicsBodyCircle(GetMousePosition(), GetRandomValue(10, 45), 10);
+            tmpSphere->useGravity = false;
+            tmpSphere->velocity = (Vector2){1, 1};
         }
         
         int bodiesCount = GetPhysicsBodiesCount();
