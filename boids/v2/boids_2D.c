@@ -7,6 +7,7 @@ int main(void)
     const int screenWidth = 1400;
     
     const int numberOfCircles = 15;
+    const int radius = 5;
     
     InitWindow(screenWidth, screenHeight, "Boid 2D");
     SetTargetFPS(60);
@@ -19,7 +20,7 @@ int main(void)
     for(int i = 0; i  < numberOfCircles; i++)
     {
         CenterX[i] = start;
-        CenterY[i] = 20;
+        CenterY[i] = 40;
         
         start += 20;
         
@@ -31,17 +32,28 @@ int main(void)
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
-        //UPDATE***************************************************
+        //UPDATE****************************************************************************
         for(int i = 0; i < numberOfCircles; i++)
         {
+            if((CenterX[i] >= (screenWidth - radius*2)) || (CenterX[i] <= radius*2))
+            {
+                direction[i].x = -direction[i].x;
+            }
+            
+            if(CenterY[i] >= (screenHeight - radius*2) || CenterY[i] <= radius*2)
+            {
+                direction[i].y = -direction[i].y;
+            }
+            
+            //move the circle
             CenterX[i] += direction[i].x;
             CenterY[i] += direction[i].y;
         }
 
-        //DRAW*****************************************************
+        //DRAW******************************************************************************
         for(int i = 0; i < numberOfCircles; i++)
         {
-            DrawCircle(CenterX[i], CenterY[i], 5, RED);
+            DrawCircle(CenterX[i], CenterY[i], radius, RED);
         }
         
         
