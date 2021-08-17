@@ -3,23 +3,27 @@
 
 int main(void)
 {
+    
     //constants for circles
-    const int screenHeight = 1000;
+    const int screenHeight = 900;
     const int screenWidth = 1400;
     
     //constants for circles
     const int numberOfCircles = 15;
-    const int radius = 5;
+    const int radius = 10;
+    
+    const Color color[] = {GRAY, YELLOW, GOLD, ORANGE, PINK, RED, MAROON, GREEN, LIME, DARKGREEN, 
+                           SKYBLUE, DARKBLUE, PURPLE, DARKPURPLE, BROWN};
     
     //variables for circles
     int CenterX[numberOfCircles];
     int CenterY[numberOfCircles];
     Vector2 direction[numberOfCircles];
-    
+
     //initialise the screen
     InitWindow(screenWidth, screenHeight, "Boid 2D");
     SetTargetFPS(60);
-    
+
     //set the starting point and starting vector for each circle
     int start = 20;
     for(int i = 0; i  < numberOfCircles; i++)
@@ -50,8 +54,13 @@ int main(void)
                 direction[i].y = -direction[i].y;
             }
             
-            for(int j = 0; j < numberOfCircles; j++)
+            int centerOfGravityX = 0;
+            int centerOfGravityY = 0;
+            //Change the direction of the circle if another circle is going to collide with it
+            for(int j = i; j < numberOfCircles; j++)
             {
+                centerOfGravityX += CenterX[j];
+                centerOfGravityY += CenterY[j];
                 //make sure that the compared circle is not the same
                 if(i != j)
                 {
@@ -66,18 +75,18 @@ int main(void)
                         {
                             if(CenterY[i] == CenterY[j])
                             {
-                                
+                                //do nothing, parrallel
                             }
                             else
                             {
-                                direction[j].y = -direction[j].y;
+                                direction[i].y = -direction[i].y;
                             }
                         }
                         else
                         {
                             if(CenterY[i] == CenterY[j])
                             {
-                                direction[j].x = -direction[j].x;
+                                direction[i].x = -direction[i].x;
                             }
                             else
                             {
@@ -85,18 +94,24 @@ int main(void)
                             }
                         }
                     }
+                    else
+                    {
+                        
+                    }
                 }
             }
-            
+
             //move the circle
             CenterX[i] += direction[i].x;
             CenterY[i] += direction[i].y;
+            
+            
         }
-
+        
         //DRAW******************************************************************************
         for(int i = 0; i < numberOfCircles; i++)
         {
-            DrawCircle(CenterX[i], CenterY[i], radius, RED);
+            DrawCircle(CenterX[i], CenterY[i], radius, color[i]);
         }
         
         
