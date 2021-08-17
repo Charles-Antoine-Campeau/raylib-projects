@@ -6,26 +6,44 @@ int main(void)
     const int screenHeight = 1000;
     const int screenWidth = 1400;
     
+    const int numberOfCircles = 15;
+    
     InitWindow(screenWidth, screenHeight, "Boid 2D");
     SetTargetFPS(60);
     
+    int CenterX[numberOfCircles];
+    int CenterY[numberOfCircles];
+    Vector2 direction[numberOfCircles];
     
-    int CenterX[] = {20};
-    int CenterY[] = {20};
-    
-    Vector2 direction[] = {{1,1}};
-    
+    int start = 20;
+    for(int i = 0; i  < numberOfCircles; i++)
+    {
+        CenterX[i] = start;
+        CenterY[i] = 20;
+        
+        start += 20;
+        
+        direction[i] = (Vector2){1, 1};
+    }
+
     while(!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         
         //UPDATE***************************************************
-        CenterX[0] += direction[0].x;
-        CenterY[0] += direction[0].y;
-        
+        for(int i = 0; i < numberOfCircles; i++)
+        {
+            CenterX[i] += direction[i].x;
+            CenterY[i] += direction[i].y;
+        }
+
         //DRAW*****************************************************
-        DrawCircle(CenterX[0], CenterY[0], 15, RED);
+        for(int i = 0; i < numberOfCircles; i++)
+        {
+            DrawCircle(CenterX[i], CenterY[i], 5, RED);
+        }
+        
         
         EndDrawing();
     }
