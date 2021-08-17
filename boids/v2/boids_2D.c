@@ -25,9 +25,9 @@ int main(void)
     for(int i = 0; i  < numberOfCircles; i++)
     {
         CenterX[i] = start;
-        CenterY[i] = 40;
+        CenterY[i] = GetRandomValue(40, 250);
         
-        start += 20;
+        start += 60;
         
         direction[i] = (Vector2){1, 1};
     }
@@ -48,6 +48,44 @@ int main(void)
             if(CenterY[i] >= (screenHeight - radius*2) || CenterY[i] <= radius*2)
             {
                 direction[i].y = -direction[i].y;
+            }
+            
+            for(int j = 0; j < numberOfCircles; j++)
+            {
+                //make sure that the compared circle is not the same
+                if(i != j)
+                {
+                    int deltaX = CenterX[j] - CenterX[i];
+                    int deltaY = CenterY[j] - CenterY[j];
+                    
+                    //verify the distance between the 2 circles
+                    if (deltaX <= radius*5 || deltaY <= radius*5)
+                    {
+                        //determine the type of tragectory
+                        if(CenterX[i] == CenterX[j])
+                        {
+                            if(CenterY[i] == CenterY[j])
+                            {
+                                
+                            }
+                            else
+                            {
+                                direction[j].y = -direction[j].y;
+                            }
+                        }
+                        else
+                        {
+                            if(CenterY[i] == CenterY[j])
+                            {
+                                direction[j].x = -direction[j].x;
+                            }
+                            else
+                            {
+                                
+                            }
+                        }
+                    }
+                }
             }
             
             //move the circle
