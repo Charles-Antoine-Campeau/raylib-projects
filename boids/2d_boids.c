@@ -4,6 +4,11 @@
 #define PHYSAC_IMPLEMENTATION
 #include "physac.h"
 
+void predictImpacts()
+{
+    
+}
+
 int main(void)
 {
     //initiate the window
@@ -17,34 +22,35 @@ int main(void)
     // Create floor rectangle physics body
     PhysicsBody floor = CreatePhysicsBodyRectangle((Vector2){ screenWidth/2, screenHeight }, screenWidth, 10, 10);
     floor->enabled = false; // Disable body state to convert it to static (no dynamics, but collisions)
-    floor->restitution = 1;
+    floor->restitution = 2;
     
     //Create left rectangle physics body
     PhysicsBody leftWall = CreatePhysicsBodyRectangle((Vector2){0, screenHeight/2 }, 10, screenHeight, 10);
     leftWall->enabled = false;
-    leftWall->restitution = 1;
+    leftWall->restitution = 2;
     
     //Create right rectangle physics body
     PhysicsBody rightWall = CreatePhysicsBodyRectangle((Vector2){screenWidth, screenHeight/2}, 10, screenHeight, 10);
     rightWall->enabled = false;
-    rightWall->restitution = 1;
+    rightWall->restitution = 2;
     
     //Create roof rectangle physics body
     PhysicsBody roof = CreatePhysicsBodyRectangle((Vector2){screenWidth/2, 0}, screenWidth, 10, 10);
     roof->enabled = false;
-    roof->restitution = 1;
-    
+    roof->restitution = 2;
+        
     while(!WindowShouldClose())
     {
         //UPDATE************************************************************************
         UpdatePhysics();
         
+        //Create new circle upon mouse right click
         if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
         {
-            PhysicsBody tmpSphere = CreatePhysicsBodyCircle(GetMousePosition(), GetRandomValue(10, 45), 10);
-            tmpSphere->useGravity = false;
-            tmpSphere->velocity = (Vector2){GetRandomValue(-1, 1), GetRandomValue(-1, 1)};
-            tmpSphere->restitution = 5;
+            PhysicsBody tmpCircle = CreatePhysicsBodyCircle(GetMousePosition(), GetRandomValue(10, 45), 10);
+            tmpCircle->useGravity = false;
+            tmpCircle->velocity = (Vector2){GetRandomValue(-1, 1), GetRandomValue(-1, 1)};
+            tmpCircle->restitution = 2;
         }
         
         int bodiesCount = GetPhysicsBodiesCount();
@@ -60,6 +66,8 @@ int main(void)
                 DestroyPhysicsBody(body);
             }
         }
+        
+        predictImpacts();
 
         
         //DRAW**************************************************************************
@@ -89,10 +97,12 @@ int main(void)
                     }
                 }
             }
-               
+            
         EndDrawing();
     }
     
+    //END******************************************************************************
     ClosePhysics();
     CloseWindow();
 }
+
