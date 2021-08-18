@@ -2,8 +2,7 @@
 #include "raylib.h"
 
 int main(void)
-{
-    
+{    
     //constants for circles
     const int screenHeight = 900;
     const int screenWidth = 1400;
