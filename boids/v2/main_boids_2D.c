@@ -61,7 +61,7 @@ int main(void)
             }
 
             //move the circle
-            boids[i].position = (Vector2) {boids[i].position.x + boids[i].direction.x, boids[i].position.y + boids[i].direction.y};
+            boids[i].position = AddVectors(&boids[i].position, &boids[i].direction);
         }
         
         //DRAW******************************************************************************

@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "math.h"
 
 //***************************************************************************************************************************************
 //STRUCTURE DEFINITION
@@ -92,12 +93,19 @@ void CheckIfGoingToCollide(struct Boid *this, struct Boid *other)
 /**
     Add two Vector2 together
     Param:
-        first: the first Vector2
-        second: the second Vector2
+        first: pointer to the first Vector2
+        second: pointer to the second Vector2
     return:
         The sum of the two Vector2
 */
-Vector2 AddVectors(Vector2 first, Vector2 second)
+Vector2 AddVectors(Vector2 *first, Vector2 *second)
 {
-    return (Vector2) {first.x + second.x, first.y + second.y};
+    return (Vector2) {first->x + second->x, first->y + second->y};
+}
+
+/**
+*/
+void DirectInSameDirectionThanLocalRegion()
+{
+    
 }
