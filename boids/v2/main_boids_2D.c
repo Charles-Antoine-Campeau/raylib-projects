@@ -9,6 +9,8 @@ const int screenWidth = 1400;
 //constants for circles
 const int numberOfCircles = 15;
 const int radius = 10;
+const int vision = radius * 3;
+const int collideDistance = vision / 2;
 
 const Color color[] = {GRAY, YELLOW, GOLD, ORANGE, PINK, RED, MAROON, GREEN, LIME, DARKGREEN, 
                        SKYBLUE, DARKBLUE, PURPLE, DARKPURPLE, BROWN};
@@ -33,7 +35,7 @@ int main(void)
         //create a boid and add it to the array
         struct Boid tmpBoid;
         tmpBoid.color = color[i];
-        tmpBoid.direction = (Vector2){1, 1};
+        tmpBoid.direction = (Vector2){1.00, 1.00};
         tmpBoid.position = (Vector2){start, GetRandomValue(40, 300)};
         tmpBoid.radius = radius;
         boids[i] = tmpBoid;
@@ -49,7 +51,7 @@ int main(void)
         //UPDATE****************************************************************************
         for(int i = 0; i < numberOfCircles; i++)
         {
-            CheckIfBorderReach(&boids[i], screenHeight, screenWidth, radius);
+            CheckIfBorderReach(&boids[i], screenHeight, screenWidth);
             
             //Change the direction of the circle if another circle is going to collide with it
             for(int j = i; j < numberOfCircles; j++)
@@ -64,10 +66,16 @@ int main(void)
             boids[i].position = AddVectors(&boids[i].position, &boids[i].direction);
         }
         
+        for(int i = 0; i < numberOfCircles; i++)
+        {
+            DirectInSameDirectionThanLocalRegion(boids, i);
+            SetPosition(&boids[i], AddVectors(&boids[i].position, &boids[i].direction) );
+        }
+        
         //DRAW******************************************************************************
         for(int i = 0; i < numberOfCircles; i++)
         {
-            DrawCircle(GetPositionX(boids[i]), GetPositionY(boids[i]), radius, GetBoidColor(boids[i]));
+            DrawCircle(GetPositionX(&boids[i]), GetPositionY(&boids[i]), radius, GetBoidColor(&boids[i]));
         }
         
         
