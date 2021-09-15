@@ -68,7 +68,8 @@ int main(void)
         
         for(int i = 0; i < numberOfCircles; i++)
         {
-            DirectInSameDirectionThanLocalRegion(boids, i);
+            Vector2 localRegionVector = DirectInSameDirectionThanLocalRegion(boids, i);
+            
             SetPosition(&boids[i], AddVectors(&boids[i].position, &boids[i].direction) );
         }
         

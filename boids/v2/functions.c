@@ -107,8 +107,10 @@ Vector2 AddVectors(Vector2 *first, Vector2 *second)
     Param:
         boids: array containg all the boids
         index: index of the boid to change direction
+    Return:
+        the new suggested vector
 */
-void DirectInSameDirectionThanLocalRegion(struct Boid boids[], int index)
+Vector2 DirectInSameDirectionThanLocalRegion(struct Boid boids[], int index)
 {
     int numberInLocal = 0;
     Vector2 newDirectionVector = (Vector2) {0.00, 0.00};
@@ -136,6 +138,6 @@ void DirectInSameDirectionThanLocalRegion(struct Boid boids[], int index)
     {
         newDirectionVector.x = newDirectionVector.x / numberInLocal;
         newDirectionVector.y = newDirectionVector.y / numberInLocal;
-        SetDirection(&boids[index], newDirectionVector);
+        return newDirectionVector;
     }
 }
