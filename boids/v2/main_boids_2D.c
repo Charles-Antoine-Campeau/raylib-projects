@@ -49,6 +49,22 @@ int main(void)
         ClearBackground(RAYWHITE);
         
         //UPDATE****************************************************************************
+        
+        for(int i = 0; i < numberOfCircles; i++)
+        {
+            Vector2 localRegionVector = DirectInSameDirectionThanLocalRegion(boids, i);
+            Vector2 centerOfMassVector = MoveTowardCenter(boids, i);
+            
+            Vector2 newDirection;
+            int factor = 5;
+            newDirection.x = localRegionVector.x/factor + centerOfMassVector.x/factor;
+            newDirection.y = localRegionVector.y/factor + centerOfMassVector.y/factor;
+            
+            SetDirection(&boids[i], newDirection);
+            
+            SetPosition(&boids[i], AddVectors(&boids[i].position, &boids[i].direction) );
+        }
+        
         for(int i = 0; i < numberOfCircles; i++)
         {
             CheckIfBorderReach(&boids[i], screenHeight, screenWidth);
@@ -65,13 +81,7 @@ int main(void)
             //move the circle
             boids[i].position = AddVectors(&boids[i].position, &boids[i].direction);
         }
-        
-        for(int i = 0; i < numberOfCircles; i++)
-        {
-            Vector2 localRegionVector = DirectInSameDirectionThanLocalRegion(boids, i);
-            
-            SetPosition(&boids[i], AddVectors(&boids[i].position, &boids[i].direction) );
-        }
+
         
         //DRAW******************************************************************************
         for(int i = 0; i < numberOfCircles; i++)

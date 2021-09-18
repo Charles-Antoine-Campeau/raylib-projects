@@ -140,6 +140,11 @@ Vector2 DirectInSameDirectionThanLocalRegion(struct Boid boids[], int index)
         newDirectionVector.y = newDirectionVector.y / numberInLocal;
         return newDirectionVector;
     }
+    else
+    {
+        Vector2 nullReturn = {0,0};
+        return nullReturn;
+    }
 }
 
 /**
@@ -162,8 +167,8 @@ Vector2 MoveTowardCenter(struct Boid boids[], int index)
         }
     }
     
-    center.x = ((center.x/(numberOfCircles - 1)) + boids[index].position.x)/100;
-    center.y = ((center.y/(numberOfCircles - 1)) + boids[index].position.y)/100;
+    center.x = ((center.x/(numberOfCircles - 1)) - boids[index].position.x)/100;
+    center.y = ((center.y/(numberOfCircles - 1)) - boids[index].position.y)/100;
     
     return center;
 }
