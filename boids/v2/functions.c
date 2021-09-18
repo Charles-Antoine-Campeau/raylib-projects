@@ -200,8 +200,8 @@ Vector2 KeepAwayFromOthers(struct Boid boids[], int index)
             
             if(abs(pythagoreanTheorem(delta.x, delta.y)) < 100)
             {
-                repulsion.x = repulsion.x - delta.x;
-                repulsion.y = repulsion.y - delta.y;
+                repulsion.x = (repulsion.x - delta.x)/100;
+                repulsion.y = (repulsion.y - delta.y)/100;
             }
         }
     }

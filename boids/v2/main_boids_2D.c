@@ -54,11 +54,12 @@ int main(void)
         {
             Vector2 localRegionVector = DirectInSameDirectionThanLocalRegion(boids, i);
             Vector2 centerOfMassVector = MoveTowardCenter(boids, i);
+            Vector2 repulsionVector = KeepAwayFromOthers(boids, i);
             
             Vector2 newDirection;
-            int factor = 5;
-            newDirection.x = localRegionVector.x/factor + centerOfMassVector.x/factor;
-            newDirection.y = localRegionVector.y/factor + centerOfMassVector.y/factor;
+            int factor = 3;
+            newDirection.x = localRegionVector.x/factor + centerOfMassVector.x/factor + repulsionVector.x/factor;
+            newDirection.y = localRegionVector.y/factor + centerOfMassVector.y/factor + repulsionVector.y/factor;
             
             SetDirection(&boids[i], newDirection);
             
