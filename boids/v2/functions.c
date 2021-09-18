@@ -141,3 +141,29 @@ Vector2 DirectInSameDirectionThanLocalRegion(struct Boid boids[], int index)
         return newDirectionVector;
     }
 }
+
+/**
+    Get the perceived global center of mass and create a vector to move the boid towards that point
+    Param:
+        boids: array containg all the boids
+        index: index of the boid to change direction
+    Return:
+        a vector pointing towards the center of mass
+*/
+Vector2 MoveTowardCenter(struct Boid boids[], int index)
+{
+    Vector2 center = {0,0};
+    
+    for(int i = 0; i < numberOfCircles; i++)
+    {
+        if(i != index)
+        {
+            center = AddVectors(&center, &boids[i].position);
+        }
+    }
+    
+    center.x = ((center.x/(numberOfCircles - 1)) + boids[index].position.x)/100;
+    center.y = ((center.y/(numberOfCircles - 1)) + boids[index].position.y)/100;
+    
+    return center;
+}
