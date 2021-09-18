@@ -32,6 +32,11 @@ void SetRadius(struct Boid boid) { boid.radius = 10; }
 //***************************************************************************************************************************************
 //GLOBAL METHODS
 
+double pythagoreanTheorem(double a, double b)
+{
+    return sqrt(pow(a, 2) + pow(b, 2));
+}
+
 /**
     Determine if the boid has reach one of the side of the screen
     Param:
@@ -171,4 +176,35 @@ Vector2 MoveTowardCenter(struct Boid boids[], int index)
     center.y = ((center.y/(numberOfCircles - 1)) - boids[index].position.y)/100;
     
     return center;
+}
+
+/**
+    Create a repulsion vector for the boid
+    Param:
+        boids: array containg all the boids
+        index: index of the boid to change direction
+    Return:
+        the repulsion vector
+*/
+Vector2 KeepAwayFromOthers(struct Boid boids[], int index)
+{
+    Vector2 repulsion = {0, 0};
+    
+    for(int i = 0; i < numberOfCircles; i++)
+    {
+        if(i != index)
+        {
+            Vector2 delta;
+            delta.x = boids[i].position.x - boids[index].position.x;
+            delta.y = boids[i].position.y - boids[index].position.y;
+            
+            if(abs(pythagoreanTheorem(delta.x, delta.y)) < 100)
+            {
+                repulsion.x = repulsion.x - delta.x;
+                repulsion.y = repulsion.y - delta.y;
+            }
+        }
+    }
+    
+    return repulsion;
 }
